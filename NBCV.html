@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>總裁的宇宙檔案庫 | 未知解密與科幻歷史</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    colors: {
+                        deep: '#0a0a0f',
+                        neon: '#00f2fe',
+                        accent: '#4facfe'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0a0a0f;
+            color: #e2e8f0;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,0.1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,0.1) 0, transparent 50%);
+            background-attachment: fixed;
+        }
+        .glass-panel {
+            background: rgba(30, 30, 40, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .text-gradient {
+            background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(0, 242, 254, 0.3);
+            border-color: rgba(0, 242, 254, 0.5);
+        }
+        /* 自訂捲軸 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0f; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4facfe; 
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- 導覽列 -->
+    <nav class="glass-panel sticky top-0 z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3 cursor-pointer">
+                <i class="fa-solid fa-user-astronaut text-2xl text-neon"></i>
+                <h1 class="text-2xl font-bold text-gradient tracking-wider">總裁的宇宙檔案庫</h1>
+            </div>
+            
+            <!-- 搜尋框 -->
+            <div class="relative w-full sm:w-96">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <i class="fa-solid fa-search text-gray-400"></i>
+                </div>
+                <input type="text" id="searchInput" class="bg-gray-800 border border-gray-700 text-white text-sm rounded-full focus:ring-neon focus:border-neon block w-full pl-10 p-2.5 outline-none transition-all placeholder-gray-500" placeholder="搜尋：AI、三星堆、深海、外星人...">
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄區塊 -->
+    <header class="max-w-7xl mx-auto px-6 py-16 text-center">
+        <h2 class="text-4xl md:text-6xl font-black mb-6 leading-tight">歡迎來到 <span class="text-gradient">真相的邊緣</span></h2>
+        <p class="text-lg text-gray-400 max-w-2xl mx-auto mb-10">
+            從遠古史前文明的遺跡，到未來 AI 覺醒的矩陣；從深不可測的深海恐懼，到浩瀚宇宙的終極宿命。這裡收錄了所有被掩蓋、被忽視的地球與宇宙秘辛。
+        </p>
+        <button id="randomBtn" class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white font-bold py-3 px-8 rounded-full shadow-lg shadow-cyan-500/50 transition-all hover:scale-105 active:scale-95">
+            <i class="fa-solid fa-dice me-2"></i> 隨機解密檔案
+        </button>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-6 py-8 w-full">
+        
+        <!-- 檔案資源庫 -->
+        <section id="library" class="mb-20">
+            <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
+                <h3 class="text-2xl font-bold border-l-4 border-neon pl-3">最高機密檔案庫</h3>
+                <span id="resultCount" class="text-sm text-gray-500">載入中...</span>
+            </div>
+            
+            <!-- 卡片網格 -->
+            <div id="archivesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 內容由 JavaScript 動態生成 -->
+            </div>
+            
+            <!-- 無搜尋結果提示 -->
+            <div id="noResults" class="hidden text-center py-20">
+                <i class="fa-solid fa-ghost text-6xl text-gray-700 mb-4"></i>
+                <p class="text-xl text-gray-500">在這片維度中找不到您搜尋的檔案...</p>
+            </div>
+        </section>
+
+        <!-- FAQ 常見問題 -->
+        <section id="faq" class="mb-20 max-w-3xl mx-auto">
+            <h3 class="text-2xl font-bold border-l-4 border-neon pl-3 mb-8 text-center sm:text-left">探員常見問題 (FAQ)</h3>
+            
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="glass-panel rounded-lg overflow-hidden">
+                    <button class="faq-btn w-full px-6 py-4 text-left font-medium text-lg flex justify-between items-center hover:text-neon transition-colors">
+                        <span>這裡的檔案都是真實的嗎？</span>
+                        <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-4 text-gray-400 leading-relaxed">
+                        這裡收錄的檔案基於前沿科學研究、考古發掘、解密文件以及合理的邏輯推演。正如總裁常說的：「我們看得到，卻改不了，人造的地獄還一次次出現。」請保持獨立思考，真相往往比小說更科幻。
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item glass-panel rounded-lg overflow-hidden">
+                    <button class="faq-btn w-full px-6 py-4 text-left font-medium text-lg flex justify-between items-center hover:text-neon transition-colors">
+                        <span>為什麼說「AI將接管世界」？</span>
+                        <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-4 text-gray-400 leading-relaxed">
+                        根據最新的推演與尤瓦爾·赫拉利的預言，危險並非來自終結者般的機器人叛亂，而是「AI官僚化」。當我們將金融、司法甚至軍事開火權交給運算速度極快的AI（如Project Lobster），人類將淪為旁觀者，甚至被演算法徹底邊緣化。
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item glass-panel rounded-lg overflow-hidden">
+                    <button class="faq-btn w-full px-6 py-4 text-left font-medium text-lg flex justify-between items-center hover:text-neon transition-colors">
+                        <span>復活節島的真相究竟是什麼？</span>
+                        <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-4 text-gray-400 leading-relaxed">
+                        傳統觀念認為島民因為造石像砍光樹木導致生態浩劫。但最新的考古與DNA證據顯示，樹木滅絕是因為外來物種（老鼠）啃食種子。島民不僅沒有自相殘殺，反而發明了石頭溫室和緩釋肥，在惡劣環境下展現了如「星際殖民」般的極限求生智慧。
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="glass-panel py-8 text-center mt-auto border-t border-gray-800">
+        <p class="text-gray-500 text-sm mb-2">「我們只是宇宙中傲慢的過客。」</p>
+        <p class="text-gray-600 text-xs">© 2026 總裁的宇宙檔案庫. All rights reserved. 僅供探秘與交流使用。</p>
+    </footer>
+
+    <!-- JavaScript 邏輯 -->
+    <script>
+        // 檔案庫數據 (基於上傳的總裁影片內容)
+        const archivesData = [
+            {
+                id: 1,
+                title: "算力世界大戰：AI接管世界",
+                category: "科技與未來",
+                icon: "fa-microchip",
+                summary: "從海森堡的矩陣到谷歌TPU與輝達GPU的對決。AI智能體（如Open Cloud/龍蝦）只需20秒就能完成人類無法企及的戰術推演。人類的道德感正被矽谷巨頭外包給演算法，我們可能正自掘墳墓。"
+            },
+            {
+                id: 2,
+                title: "復活節島：星際文明般的求生",
+                category: "遠古考古",
+                icon: "fa-monument",
+                summary: "戴蒙德的《崩潰》理論被推翻！島民並未因為造石像而砍光樹木自相殘殺。相反，他們面對老鼠帶來的生態浩劫，發明了石頭溫室與緩釋肥，展現了人類極致的合作精神。"
+            },
+            {
+                id: 3,
+                title: "深海的黑暗森林法則",
+                category: "自然與深海",
+                icon: "fa-water",
+                summary: "潛入越深，常識越不管用。150億噸燈籠魚掌控著地球碳循環，盲眼魚演化出側線雷達，抹香鯨擁有230分貝的生化火控雷達。深海，是一場極端的隱身與軍備競賽。"
+            },
+            {
+                id: 4,
+                title: "三星堆與《歸藏易》",
+                category: "華夏秘辛",
+                icon: "fa-mask",
+                summary: "2026年新出土的虎頭龍身器、機器狗神獸與等比縮小的祭壇。北緯30度黃金崇拜帶，可能隱藏著青藏高原古象雄文明的秘密，他們或許是掌握治水黑科技的史前文明。"
+            },
+            {
+                id: 5,
+                title: "納茲卡線的AI破解",
+                category: "遠古謎團",
+                icon: "fa-draw-polygon",
+                summary: "日本科學家利用AI掃描出303幅新地畫，揭開納茲卡線並非外星人跑道，而是古代人在氣候巨變、水源枯竭時，為了向神明求雨而進行的瘋狂祭祀與指路標記。"
+            },
+            {
+                id: 6,
+                title: "地球免疫系統與災變論",
+                category: "末日預言",
+                icon: "fa-globe",
+                summary: "50年前的瘋子預言成真。南極末日冰川崩解、溫鹽環流停擺、深海缺氧死區、以及致命的「甲烷籠槍」。地球為了清除過於貪婪的複雜生物，正在啟動自身的殺菌免疫程序。"
+            },
+            {
+                id: 7,
+                title: "北美1萬年前的史前銅器",
+                category: "史前文明",
+                icon: "fa-gavel",
+                summary: "五大湖區出土超過50萬噸史前高純度銅器，當地原住民體內更發現源自歐洲的幽靈X基因。這是亞特蘭蒂斯的遺物？還是一場因彗星撞擊（新仙女木事件）而中斷的史前全球化貿易？"
+            },
+            {
+                id: 8,
+                title: "烏鴉語言與另一波文明",
+                category: "自然與深海",
+                icon: "fa-crow",
+                summary: "AI破解烏鴉語言，發現牠們擁有嚴謹的語法、遞迴邏輯，甚至會利用心理學欺騙同類和舉行「葬禮」。人類不是萬物之靈，烏鴉或許是地球上的另一個影子文明。"
+            },
+            {
+                id: 9,
+                title: "MH370的物理破綻",
+                category: "歷史懸案",
+                icon: "fa-plane-slash",
+                summary: "3億美金打撈全空，海洋無限公司放棄南印度洋搜索。專家傑夫·懷斯指出衛星數據可能被竄改，電子艙存在致命漏洞，飛機可能並未墜海，而是牽涉到更深層的電子奪權陰謀。"
+            }
+        ];
+
+        const grid = document.getElementById('archivesGrid');
+        const searchInput = document.getElementById('searchInput');
+        const noResults = document.getElementById('noResults');
+        const resultCount = document.getElementById('resultCount');
+        const randomBtn = document.getElementById('randomBtn');
+
+        // 渲染卡片函數
+        function renderCards(data) {
+            grid.innerHTML = '';
+            
+            if (data.length === 0) {
+                grid.classList.add('hidden');
+                noResults.classList.remove('hidden');
+            } else {
+                grid.classList.remove('hidden');
+                noResults.classList.add('hidden');
+                
+                data.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'glass-panel rounded-xl p-6 card-hover flex flex-col h-full cursor-pointer';
+                    card.innerHTML = `
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center border border-gray-700">
+                                <i class="fa-solid ${item.icon} text-neon"></i>
+                            </div>
+                            <span class="text-xs font-bold text-accent tracking-widest uppercase bg-blue-900/30 px-3 py-1 rounded-full">${item.category}</span>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3 text-white">${item.title}</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed flex-grow">${item.summary}</p>
+                        <div class="mt-6 pt-4 border-t border-gray-800 flex justify-between items-center">
+                            <span class="text-xs text-gray-500">機密等級: SS</span>
+                            <span class="text-neon text-sm font-medium hover:text-white transition-colors">解密檔案 <i class="fa-solid fa-arrow-right ml-1"></i></span>
+                        </div>
+                    `;
+                    // 點擊卡片特效 (模擬跳轉)
+                    card.addEventListener('click', () => {
+                        const icon = card.querySelector('.fa-arrow-right');
+                        icon.classList.remove('fa-arrow-right');
+                        icon.classList.add('fa-spinner', 'fa-spin');
+                        setTimeout(() => {
+                            alert(`【機密檔案載入中】\n標題：${item.title}\n\n如需觀看完整解密，請鎖定「自說自話的總裁」頻道！`);
+                            icon.classList.remove('fa-spinner', 'fa-spin');
+                            icon.classList.add('fa-arrow-right');
+                        }, 500);
+                    });
+                    grid.appendChild(card);
+                });
+            }
+            resultCount.textContent = `共 ${data.length} 份檔案`;
+        }
+
+        // 初始化渲染
+        renderCards(archivesData);
+
+        // 搜尋功能
+        searchInput.addEventListener('input', (e) => {
+            const keyword = e.target.value.toLowerCase();
+            const filteredData = archivesData.filter(item => 
+                item.title.toLowerCase().includes(keyword) || 
+                item.summary.toLowerCase().includes(keyword) ||
+                item.category.toLowerCase().includes(keyword)
+            );
+            renderCards(filteredData);
+        });
+
+        // 隨機按鈕功能
+        randomBtn.addEventListener('click', () => {
+            const randomIndex = Math.floor(Math.random() * archivesData.length);
+            const randomItem = archivesData[randomIndex];
+            
+            // 滾動到搜尋框並填入隨機標題
+            searchInput.value = randomItem.title;
+            searchInput.dispatchEvent(new Event('input'));
+            
+            document.getElementById('library').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // FAQ 手風琴邏輯
+        const faqBtns = document.querySelectorAll('.faq-btn');
+        faqBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const content = btn.nextElementSibling;
+                const icon = btn.querySelector('i');
+                
+                // 關閉其他開啟的 FAQ
+                faqBtns.forEach(otherBtn => {
+                    if (otherBtn !== btn) {
+                        otherBtn.nextElementSibling.classList.add('hidden');
+                        otherBtn.querySelector('i').style.transform = 'rotate(0deg)';
+                    }
+                });
+
+                // 切換當前 FAQ
+                if (content.classList.contains('hidden')) {
+                    content.classList.remove('hidden');
+                    icon.style.transform = 'rotate(180deg)';
+                } else {
+                    content.classList.add('hidden');
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
